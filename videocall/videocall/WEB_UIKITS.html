@@ -1,0 +1,126 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title</title>
+
+    <!-- Add your styles -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('https://i.stack.imgur.com/kX6dL.png') center/cover no-repeat fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #header {
+            color: #fff;
+            font-size: 24px;
+            text-align:center;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 0;
+        }
+
+        #root {
+            position: relative;
+            height: 600px;
+            width: 600px; /* Adjust the maximum width as needed */
+            padding: 10px;
+            margin-right: 25%;
+            
+        }
+
+        /* Add any other styles you need */
+
+        #leftTopImage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px; /* Adjust the width of the image as needed */
+            height: 200px;
+        
+        }
+
+        #rightImage {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 550px; /* Adjust the width of the image as needed */
+            height: 600px;
+            
+        }
+        #bottomLeftImage {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200px; /* Adjust the width of the image as needed */
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+
+        
+    <h1 style="font-size: 40px; position: absolute; top: 15; left: 40%; transform: translateX(-50%);">INTERACT-VERSE</h1>
+    <p style="font-size: 20px; position: absolute; top: 100; left: 40%; transform: translateX(-50%);">Step into InteractVerse, where users craft their digital destinies through seamless interactions</p>
+    <!-- Add the image on the left side at the top -->
+    <img id="leftTopImage" src="https://img.freepik.com/free-vector/group-video-concept-illustration_114360-4952.jpg?size=626&ext=jpg&uid=R64882490&ga=GA1.1.2012325925.1694419275&semt=ais" alt="Left Top Image">
+
+    <div id="root">
+        <!-- Your existing content goes here -->
+    </div>
+
+    
+    
+    <!-- Add the image on the right side -->
+    <img id="rightImage" src="https://img.freepik.com/free-vector/remote-meeting-concept-illustration_114360-4614.jpg?size=626&ext=jpg&uid=R64882490&ga=GA1.1.2012325925.1694419275&semt=ais" alt="Right Image">
+    <img id="bottomLeftImage" src="https://img.freepik.com/free-vector/telecommuting-concept-illustration_114360-1620.jpg?size=626&ext=jpg&uid=R64882490&ga=GA1.1.2012325925.1694419275&semt=ais" alt="Bottom Left Image">
+
+    <script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
+    <script>
+        window.onload = function () {
+            function getUrlParams(url) {
+                let urlStr = url.split('?')[1];
+                const urlSearchParams = new URLSearchParams(urlStr);
+                const result = Object.fromEntries(urlSearchParams.entries());
+                return result;
+            }
+
+            const roomID = getUrlParams(window.location.href)['roomID'] || (Math.floor(Math.random() * 10000) + "");
+            const userID = Math.floor(Math.random() * 10000) + "";
+            const userName = "userName" + userID;
+            const appID = 1418179394;
+            const serverSecret = "18c55c5b17f3b88a95bdb891e8bfdd20";
+            const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, userID, userName);
+
+            const zp = ZegoUIKitPrebuilt.create(kitToken);
+            zp.joinRoom({
+                container: document.querySelector("#root"),
+                sharedLinks: [{
+                    name: 'Personal link',
+                    url: window.location.protocol + '//' + window.location.host + window.location.pathname + '?roomID=' + roomID,
+                }],
+                scenario: {
+                    mode: ZegoUIKitPrebuilt.VideoConference,
+                },
+                turnOnMicrophoneWhenJoining: true,
+                turnOnCameraWhenJoining: true,
+                showMyCameraToggleButton: true,
+                showMyMicrophoneToggleButton: true,
+                showAudioVideoSettingsButton: true,
+                showScreenSharingButton: true,
+                showTextChat: true,
+                showUserList: true,
+                maxUsers: 100,
+                layout: "Auto",
+                showLayoutButton: false,
+            });
+        }
+    </script>
+
+</html>
